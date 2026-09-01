@@ -278,3 +278,5 @@ print(type(b))
 import random
 print(random.randrange(1, 33))
 print(random.randrange(7,77))
+
+print(10+5)

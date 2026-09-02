@@ -284,3 +284,6 @@ print(10+5)
 x=5
 y=3
 print(x==y)
+
+# namenode store the meta data
+# datanodes store the actual data

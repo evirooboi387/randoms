@@ -89,8 +89,9 @@ for x in list:
         max=x
 print(max)
 print("**********************")
-max= list[0]
 list={-10,-20,-30,-20,-32,-48}
+max= list[0]
+
 for x in list:
     if x>max:
         max=x

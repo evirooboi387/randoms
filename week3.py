@@ -32,6 +32,27 @@ def merge():
         else:
             c.append(b[j])
             j=j+1
+    while j<len(b):
+        c.append(b[j])
+        j=j+1
+
     print(c)
 
 merge()
+
+
+# Find All Pairs in a List that Sum to a Specific Value
+# Write a Python function to find all pairs in a list that sum to a specific value.
+# Input: [1, 2, 3, 4, 5], Sum=6
+# Output: [(1, 5), (2, 4)]
+def pairs():
+    a = [1, 2, 3, 4, 5]
+    target = 6
+    result = []
+
+    for i in range(len(a)):
+        for j in range(i+1, len(a)):
+            if a[i]+a[j]==target:
+                result.append((a[i],a[j]))
+    print(result)
+pairs()

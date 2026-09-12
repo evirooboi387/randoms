@@ -141,3 +141,37 @@ select count(distinct country) from customers;
 
 select * from customers
 where city='London';
+
+
+
+CREATE TABLE cars (
+brand VARCHAR(255),
+model VARCHAR(255),
+year INT);
+
+INSERT INTO cars(brand, model, year)
+VALUES ('Ford', 'Mustang', 1964);
+
+SELECT * FROM cars;
+
+SELECT brand,year FROM cars;
+
+ALTER TABLE cars ADD color VARCHAR(255);
+
+UPDATE cars
+SET color='red'
+WHERE brand ='Volvo';
+
+SELECT * FROM cars;
+UPDATE cars
+SET color='red'
+WHERE brand= 'Ford';
+SELECT * FROM cars;
+
+alter table cars
+drop column color;
+
+select * from cars;
+
+
+

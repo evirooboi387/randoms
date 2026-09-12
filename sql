@@ -132,3 +132,12 @@ CREATE TABLE orders (
 );
 
 select * from customers where city="Mumbai";
+
+select customer_name, country from customers;
+
+select distinct country from customers;
+
+select count(distinct country) from customers;
+
+select * from customers
+where city='London';

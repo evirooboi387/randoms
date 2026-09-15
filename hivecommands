@@ -15,3 +15,12 @@ hadoop fs -mkdir -p /data/test/text
 
 hadoop fs -put customer.txt /data/test/text
 create database xyz;
+
+CREATE external TABLE customer(id int, name string, dob date, time1 timestamp) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/data/test/text';
+show databases;
+show tables;
+
+
+describe customer;
+
+create table emp(empId int, empName String, doj date);

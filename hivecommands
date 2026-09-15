@@ -11,3 +11,7 @@ show partitions partition_date;
 
 ALTER TABLE partition_date DROP PARTITION(day = ‘2000-01-01’, event = 'e1');
 
+hadoop fs -mkdir -p /data/test/text
+
+hadoop fs -put customer.txt /data/test/text
+create database xyz;

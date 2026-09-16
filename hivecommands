@@ -24,3 +24,20 @@ show tables;
 describe customer;
 
 create table emp(empId int, empName String, doj date);
+
+
+create database complex;
+
+use complex;
+
+touch arrayfile
+
+nano arrayfile
+1,abc,40000,a$b$c,hyd
+2,def,3000,d$f,bang
+copy and paste this data into the file
+
+create table tab7 (id int,name string,sal bigint,sub array<string>,city string)
+row format delimited fields terminated by ','  collection items terminated by '$';
+load data local inpath 'arrayfile' overwrite into table tab7;
+

@@ -80,5 +80,8 @@ CREATE TABLE sales_data (    sale_id INT, product_id INT,    product_category ST
 
 When loading data, specify the partition values:LOAD DATA INPATH '/path/to/data/sales_2023-08-01_US.csv'INTO TABLE sales_dataPARTITION (sale_date='2023-08-01', country='US');
 
+To query daily sales for a specific country (e.g., USA) for a particular date: SELECT SUM(sale_amount) AS total_sales FROM sales_data WHERE sale_date = '2023-08-01' AND country = 'US';
+
+To find the top-selling products in a specific product category in a particular region: SELECT product_id, SUM(sale_amount) AS total_sales FROM sales_data WHERE product_category = 'Electronics' AND region = 'North America' GROUP BY product_id ORDER BY total_sales DESC LIMIT 10;
 
 

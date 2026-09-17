@@ -75,3 +75,10 @@ load data local inpath 'structfile' into table tab11;
 
 select addr.city from tab11;
 
+
+CREATE TABLE sales_data (    sale_id INT, product_id INT,    product_category STRING,   customer_id INT,    sale_amount FLOAT,    region STRING)PARTITIONED BY (sale_date STRING, country STRING)CLUSTERED BY (product_category, customer_id) INTO 10 BUCKETSROW FORMAT DELIMITEDFIELDS TERMINATED BY ','STORED AS ORC;
+
+When loading data, specify the partition values:LOAD DATA INPATH '/path/to/data/sales_2023-08-01_US.csv'INTO TABLE sales_dataPARTITION (sale_date='2023-08-01', country='US');
+
+
+

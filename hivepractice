@@ -187,4 +187,17 @@ SELECT
 FROM non_part;
 
 
--
+-- Q5
+CREATE TABLE date_part_bucket (
+    dateid SMALLINT,
+    week SMALLINT,
+    month STRING,
+    qtr STRING,
+    year SMALLINT,
+    holiday BOOLEAN
+)
+PARTITIONED BY (caldate DATE)
+CLUSTERED BY (dateid)
+INTO 4 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|';

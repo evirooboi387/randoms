@@ -1,0 +1,203 @@
+CREATE DATABASE hive_test;
+
+USE hive_test;
+
+-- SECTION 1
+
+
+CREATE TABLE salesman (
+    salesman_id INT,
+    name STRING,
+    city STRING,
+    commission DOUBLE
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+
+
+CREATE TABLE customer (
+    customer_id INT,
+    cust_name STRING,
+    city STRING,
+    grade INT,
+    salesman_id INT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+
+
+CREATE TABLE orders (
+    ord_no INT,
+    purch_amt DOUBLE,
+    ord_date DATE,
+    customer_id INT,
+    salesman_id INT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ',';
+
+
+-- Load data
+
+LOAD DATA LOCAL INPATH 'salesman.csv'
+INTO TABLE salesman;
+
+LOAD DATA LOCAL INPATH 'customer.csv'
+INTO TABLE customer;
+
+LOAD DATA LOCAL INPATH 'orders.csv'
+INTO TABLE orders;
+
+
+-- Q1
+SELECT
+    s.name AS salesman_name,
+    c.cust_name AS customer_name,
+    s.city AS city
+FROM salesman s
+JOIN customer c
+ON s.city = c.city;
+
+
+-- Q2
+SELECT
+    s.name AS salesman_name,
+    c.cust_name AS customer_name
+FROM salesman s
+JOIN customer c
+ON s.salesman_id = c.salesman_id;
+
+
+-- Q3
+SELECT
+    o.ord_no,
+    o.purch_amt,
+    c.cust_name,
+    c.city
+FROM orders o
+JOIN customer c
+ON o.customer_id = c.customer_id
+WHERE o.purch_amt BETWEEN 500 AND 2000;
+
+
+-- Q4
+SELECT
+    c.customer_id,
+    c.cust_name,
+    s.name AS salesman_name,
+    s.commission
+FROM customer c
+JOIN salesman s
+ON c.salesman_id = s.salesman_id
+WHERE s.commission > 0.12;
+
+
+-- Q5
+SELECT
+    c.customer_id,
+    c.cust_name,
+    c.city AS customer_city,
+    s.name AS salesman_name,
+    s.city AS salesman_city,
+    s.commission
+FROM customer c
+JOIN salesman s
+ON c.salesman_id = s.salesman_id
+WHERE c.city <> s.city
+AND s.commission > 0.12;
+
+
+
+-- SECTION 2
+
+
+CREATE TABLE salesdetail_complex (
+    Product_ID INT,
+    productdetails MAP<STRING,STRING>,
+    Order_Priority VARCHAR(4),
+    merchantType CHAR(4),
+    Sale_Amount DOUBLE,
+    Order_Quantity BIGINT,
+    Discount FLOAT,
+    Salaryhike TINYINT,
+    companyprofit SMALLINT,
+    financeDeficit DECIMAL(8,2),
+    indian BOOLEAN,
+    saledate ARRAY<DATE>,
+    saleyear ARRAY<INT>,
+    selleramountfile ARRAY<DOUBLE>,
+    orderQuantityfile ARRAY<BIGINT>,
+    costlist MAP<INT,INT>,
+    strutureType STRUCT<city:STRING,state:STRING,pin:BIGINT>,
+    systemdatetime ARRAY<STRING>
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '$'
+MAP KEYS TERMINATED BY '#';
+
+
+-- Q2
+SELECT *
+FROM salesdetail_complex
+LIMIT 2;
+
+
+-- Q3
+CREATE TABLE non_part (
+    dateid SMALLINT,
+    caldate DATE,
+    day STRING,
+    week SMALLINT,
+    month STRING,
+    qtr STRING,
+    year SMALLINT,
+    holiday BOOLEAN
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|';
+
+
+-- Q4
+CREATE TABLE date_part (
+    dateid SMALLINT,
+    day STRING,
+    week SMALLINT,
+    month STRING,
+    qtr STRING,
+    year SMALLINT,
+    holiday BOOLEAN
+)
+PARTITIONED BY (caldate DATE)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|';
+
+
+INSERT INTO TABLE date_part
+PARTITION (caldate)
+SELECT
+    dateid,
+    day,
+    week,
+    month,
+    qtr,
+    year,
+    holiday,
+    caldate
+FROM non_part;
+
+
+-- Q5
+CREATE TABLE date_part_bucket (
+    dateid SMALLINT,
+    week SMALLINT,
+    month STRING,
+    qtr STRING,
+    year SMALLINT,
+    holiday BOOLEAN
+)
+PARTITIONED BY (caldate DATE)
+CLUSTERED BY (dateid)
+INTO 4 BUCKETS
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '|';

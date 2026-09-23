@@ -243,4 +243,13 @@ SparkSession available as 'spark'.
 >>> rdd = spark.sparkContext.textFile("file:///home/takeo/test.txt")
 >>> rdd.collect()
 ['hello world', 'hello usa', 'hello nepal', 'hi usa']
->
+>>> rdd2 = rdd.flatMap(lambda x: x.split(" "))
+>>> rdd2.collect()
+['hello', 'world', 'hello', 'usa', 'hello', 'nepal', 'hi', 'usa']
+>>> rdd3= rdd2.map(lambda x:(x,1))
+>>> rdd3.collect()
+\[('hello', 1), ('world', 1), ('hello', 1), ('usa', 1), ('hello', 1), ('nepal', 1), ('hi', 1), ('usa', 1)]
+>>> rdd5=rdd3.reduceByKey(lambda a,b:a+b)
+>>> rdd5.collect()
+[('world', 1), ('usa', 2), ('nepal', 1), ('hello', 3), ('hi', 1)]
+>>>

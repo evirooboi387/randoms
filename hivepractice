@@ -201,3 +201,55 @@ CLUSTERED BY (dateid)
 INTO 4 BUCKETS
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|';
+
+takeo@9018e93e85ce:~$ pyspark
+Python 3.10.6 (main, Nov 14 2022, 16:10:14) [GCC 11.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+26/09/23 06:48:58 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /__ / .__/\_,_/_/ /_/\_\   version 3.3.2
+      /_/
+
+Using Python version 3.10.6 (main, Nov 14 2022 16:10:14)
+Spark context Web UI available at http://9018e93e85ce:4040
+Spark context available as 'sc' (master = local[*], app id = local-1790126338927).
+SparkSession available as 'spark'.
+>>> data = [1,2,3,4,5,6,7,8,9,10,11,12]
+>>> rdd= sc.parallelize(data)
+>>> rdd.count()
+12
+>>> rdd.collect()
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+>>> rdd=spark.sparkContext.parallelize(data)
+>>> rdd.collect()
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+>>> rdd2=sc.textFile("file:///home/takeo/customer.txt")
+>>> rdd2.count()
+4
+>>> rdd2.collect()
+['1,rahul,2010-01-01,2010-01-01 01:01:01', '2,rakesh,2010-01-02,2010-01-02 01:01:01', ',rahul,,2010-01-01 01:01:01', '4,rakesh,2010-01-02,2010-01-02 01:01:01']
+>>> rdd10=spark.sparkContext.parallelize(data, 10)
+>>> rdd10.getNumPartitions()
+10
+>>> rdd11=rdd10.coalesce(5)
+>>> rdd11.getNumPartitions()
+5
+>>> rdd12=rdd10.repartition(2)
+>>> rdd12.getNumPartitions()
+2
+>>> rdd = spark.sparkContext.textFile("file:///home/takeo/test.txt")
+>>> rdd.collect()
+['hello world', 'hello usa', 'hello nepal', 'hi usa']
+>>> rdd2 = rdd.flatMap(lambda x: x.split(" "))
+>>> rdd2.collect()
+['hello', 'world', 'hello', 'usa', 'hello', 'nepal', 'hi', 'usa']
+>>> rdd3= rdd2.map(lambda x:(x,1))
+>>> rdd3.collect()
+\[('hello', 1), ('world', 1), ('hello', 1), ('usa', 1), ('hello', 1), ('nepal', 1), ('hi', 1), ('usa', 1)]
+>>> rdd5=rdd3.reduceByKey(lambda a,b:a+b)
+>>> rdd5.collect()
+[('world', 1), ('usa', 2), ('nepal', 1), ('hello', 3), ('hi', 1)]
+>>> 

@@ -253,3 +253,45 @@ SparkSession available as 'spark'.
 >>> rdd5.collect()
 [('world', 1), ('usa', 2), ('nepal', 1), ('hello', 3), ('hi', 1)]
 >>>
+
+
+root@9018e93e85ce:/# su takeo
+takeo@9018e93e85ce:/$ cd
+takeo@9018e93e85ce:~$ ls
+a.txt         data        installs      pycharmprojects              startApps       test_folder
+airflow       hadoop      installshive  redshift-jdbc42-2.1.0.9.jar  startHadoop.sh  zookeeper
+bootcamp      hive        jsdk          restartHadoop.sh             startHive.sh
+customer.txt  installAll  kafka         spark                        stopHadoop.sh
+takeo@9018e93e85ce:~$ cd pycharmprojects/
+takeo@9018e93e85ce:~/pycharmprojects$ ls
+sparkproject
+takeo@9018e93e85ce:~/pycharmprojects$ cd sparkproject/
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ ls
+main.py
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ python3 main.py
+Hi, PyCharm
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ ls
+class1.py  main.py
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ cat class1.py
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ cat class1.py
+print(
+    'Helloworld'
+)takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ cat class1.py
+print('Helloworld')takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ python3 class1.py
+Helloworld
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ ls
+class1.py  main.py
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ spark-
+spark-class        spark-shell        spark-sql          spark-submit
+spark-class.cmd    spark-shell.cmd    spark-sql.cmd      spark-submit.cmd
+spark-class2.cmd   spark-shell2.cmd   spark-sql2.cmd     spark-submit2.cmd
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ spark-submit class1.py
+26/09/23 07:22:41 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/23 07:22:41 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+12
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$ spark-submit class1.py
+26/09/23 07:23:12 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/09/23 07:23:12 WARN Utils: Service 'SparkUI' could not bind on port 4040. Attempting port 4041.
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+takeo@9018e93e85ce:~/pycharmprojects/sparkproject$
+

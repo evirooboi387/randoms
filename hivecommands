@@ -65,16 +65,6 @@ select dud["pf"],dud["epf"] from tab10;
 Create file structfile
 
 1,abc,40000,a$b$c,pf#500$epf#200,hyd$ap$500001
-2,def,3000,d$f,pf#500,bang$kar$600038
-copy this data into file.
-
-create table emp (id int,name string,sal bigint,sub array<string>,dud map<string,int>,addr struct<city:string,state:string,pin:bigint>) row format delimited fields terminated by ',' collection items terminated by '$' map keys terminated by '#';
-
-load data local inpath 'structfile' into table tab11;
-
-
-select addr.city from tab11;
-
 
 CREATE TABLE sales_data (    sale_id INT, product_id INT,    product_category STRING,   customer_id INT,    sale_amount FLOAT,    region STRING)PARTITIONED BY (sale_date STRING, country STRING)CLUSTERED BY (product_category, customer_id) INTO 10 BUCKETSROW FORMAT DELIMITEDFIELDS TERMINATED BY ','STORED AS ORC;
 

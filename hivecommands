@@ -69,6 +69,7 @@ Create file structfile
 copy this data into file.
 
 create table emp (id int,name string,sal bigint,sub array<string>,dud map<string,int>,addr struct<city:string,state:string,pin:bigint>) row format delimited fields terminated by ',' collection items terminated by '$' map keys terminated by '#';
+df.show()
 
 load data local inpath 'structfile' into table tab11;
 

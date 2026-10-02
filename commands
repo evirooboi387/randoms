@@ -87,7 +87,15 @@ drop table emp;
 show tables;
 create table emp(empId int, empName string, doj date);
 insert into emp values(1,'vishal','2009-01-01');
-
+show tables;
+describe customer;
+create emp1(empId int, empName String, doj date);
+create table  emp1(empId int, empName String, doj date);
+show tables;
+insert overwrite table emp1 select * from emp;
+select * emp1;
+select * from  emp1;
+insert into table emp1 select * from emp ;
 select * from  emp1;
 insert overwrite table emp1 select * from emp;
 select * from  emp1;

@@ -4,12 +4,6 @@ for i in a:
     b= i+b
 print(b)
 
-a = [1, 2, 3, 4, 5, 6]
-b=[]
-for i in a:
-    if i%2==0:
-        b.append(i)
-print(b)
 
 a = [10, 15, 20, 25, 30, 35, 40]
 c=[]

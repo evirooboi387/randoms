@@ -241,28 +241,7 @@ if sorted(a) == sorted(b):
 else:
     print(False)
 
-# question24
-numbers = [1, 2, 3, 5]
 
-for i in range(1, 6):
-    if i not in numbers:
-        print(i)
-        break
-
-# question25
-numbers = [1, 2, 2, 3, 3, 3, 4]
-
-top = numbers[0]
-maximum = 0
-
-for i in numbers:
-    count = numbers.count(i)
-
-    if count > maximum:
-        maximum = count
-        top = i
-
-print(top)
 
 
 

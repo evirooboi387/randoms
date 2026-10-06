@@ -255,14 +255,6 @@ numbers = [1, 2, 2, 3, 3, 3, 4]
 top = numbers[0]
 maximum = 0
 
-for i in numbers:
-    count = numbers.count(i)
-
-    if count > maximum:
-        maximum = count
-        top = i
-
-print(top)
 
 
 

@@ -256,12 +256,7 @@ bool(0)
 bool("")
 bool([])
 
-x=1
-y=5.5
-z=-343543421245
-print(type(x))
-print(type(y))
-print(type(z))
+
 
 #Type conversion
 x=1

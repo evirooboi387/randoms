@@ -1,0 +1,9 @@
+
+#Read from redshift
+
+wget https://s3.amazonaws.com/redshift-downloads/drivers/jdbc/2.1.0.9/redshift-jdbc42-2.1.0.9.jar
+
+Spark-submit —jars ~/redshift-jdbc42-2.1.0.9.jar
+
+pyspark --jars ~/redshift-jdbc42-2.1.0.9.jar
+df = spark.read.format("jdbc").option("url", "jdbc:redshift://default-workgroup.492715478808.us-east-1.redshift-serverless.amazonaws.com:5439/dev").option("dbtable", "dev.test.listing").option("driver","com.amazon.redshift.jdbc42.Driver").option("user", "admin").option("password", "Admin1234").load()

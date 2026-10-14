@@ -71,3 +71,9 @@ unload ('select * from test.listing')
 to 's3://riwaj-bootcamp-1234/redshift/output/parquet/file'
 iam_role 'arn:aws:iam::492715478808:role/redshift_admin'
 PARQUET;
+
+Unload data from redshift to S3 in csv
+unload ('select * from test.listing')
+to 's3://riwaj-bootcamp-1234/redshift/output/csv/file'
+iam_role 'arn:aws:iam::492715478808:role/redshift_admin'
+CSV;

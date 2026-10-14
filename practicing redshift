@@ -61,4 +61,7 @@ create table test.listing(
 	totalprice decimal(8,2),
 	listtime timestamp);
 
-
+#loading data from s3 into redshift
+copy test.listing
+from 's3://riwaj-bootcamp-1234/redshift/input/listings.txt'
+iam_role 'arn:aws:iam::492715478808:role/redshift_admin';

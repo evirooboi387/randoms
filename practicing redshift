@@ -7,3 +7,32 @@ Spark-submit —jars ~/redshift-jdbc42-2.1.0.9.jar
 
 pyspark --jars ~/redshift-jdbc42-2.1.0.9.jar
 df = spark.read.format("jdbc").option("url", "jdbc:redshift://default-workgroup.492715478808.us-east-1.redshift-serverless.amazonaws.com:5439/dev").option("dbtable", "dev.test.listing").option("driver","com.amazon.redshift.jdbc42.Driver").option("user", "admin").option("password", "Admin1234").load()
+
+#writing to redshift
+
+import pyspark
+from pyspark.sql import SparkSession
+from pyspark.sql.types import StructType,StructField, StringType, IntegerType
+
+
+data = [("James","","Smith","36636","M",3000),
+    ("Michael","Rose","","40288","M",4000),
+    ("Robert","","Williams","42114","M",4000),
+    ("Maria","Anne","Jones","39192","F",4000),
+    ("Jen","Mary","Brown","","F",-1)
+  ]
+
+schema = StructType([ \
+    StructField("firstname",StringType(),True), \
+    StructField("middlename",StringType(),True), \
+    StructField("lastname",StringType(),True), \
+    StructField("id", StringType(), True), \
+    StructField("gender", StringType(), True), \
+    StructField("salary", IntegerType(), True) \
+  ])
+
+df = spark.createDataFrame(data=data,schema=schema)
+df.printSchema()
+df.show()
+
+df.write.format("jdbc").option("url", "?).option("dbtable", "dev.test.employee").option("driver","com.amazon.redshift.jdbc42.Driver").option("user", "?").option("password", "?").mode("overwrite").save()

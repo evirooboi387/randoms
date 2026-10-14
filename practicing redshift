@@ -65,3 +65,9 @@ create table test.listing(
 copy test.listing
 from 's3://riwaj-bootcamp-1234/redshift/input/listings.txt'
 iam_role 'arn:aws:iam::492715478808:role/redshift_admin';
+
+#Unload data from redshift to S3 in parquet
+unload ('select * from test.listing')
+to 's3://riwaj-bootcamp-1234/redshift/output/parquet/file'
+iam_role 'arn:aws:iam::492715478808:role/redshift_admin'
+PARQUET;

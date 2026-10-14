@@ -49,4 +49,16 @@ df.write.format("jdbc").option("url", "?).option("dbtable", "dev.test.employee")
 8|11891|8036|2139|6|82.00|492.00|2008-11-09 05:07:30
 9|691|554|2078|6|135.00|810.00|2008-09-09 08:03:36
 10|24858|3375|1994|16|197.00|3152.00|2008-06-17 09:44:54
-"
+
+#Create table
+create table test.listing(
+	listid integer not null distkey,
+	sellerid integer not null,
+	eventid integer not null,
+	dateid smallint not null  sortkey,
+	numtickets smallint not null,
+	priceperticket decimal(8,2),
+	totalprice decimal(8,2),
+	listtime timestamp);
+
+

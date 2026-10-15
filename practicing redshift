@@ -77,3 +77,15 @@ unload ('select * from test.listing')
 to 's3://riwaj-bootcamp-1234/redshift/output/csv/file'
 iam_role 'arn:aws:iam::492715478808:role/redshift_admin'
 CSV;
+
+#copying from parquet to s3
+#first creating new table for that
+create table test.listing_parquet(
+	listid integer not null distkey,
+	sellerid integer not null,
+	eventid integer not null,
+	dateid smallint not null  sortkey,
+	numtickets smallint not null,
+	priceperticket decimal(8,2),
+	totalprice decimal(8,2),
+	listtime timestamp);

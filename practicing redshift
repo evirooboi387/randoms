@@ -119,3 +119,11 @@ timeformat 'YYYY-MM-DD HH:MI:SS';
 8|The Home Depot Center|Carson|CA|
 9|Dick's Sporting Goods Park|Commerce City|CO|
 10|Pizza Hut Park|Frisco|TX|
+
+#first creating a table
+create table test.venue_new(
+venueid smallint not null,
+venuename varchar(100) not null,
+venuecity varchar(30),
+venuestate char(2),
+venueseats integer not null default '1000');

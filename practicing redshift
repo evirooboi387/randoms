@@ -97,4 +97,13 @@ create table test.event(
 	dateid smallint not null sortkey,
 	eventname varchar(200),
 	starttime timestamp);
-"
+
+copy test.event
+from 's3://riwaj-bootcamp-1234/redshift/input/events.txt'
+iam_role 'arn:aws:iam::492715478808:role/redshift_admin'
+removequotes
+emptyasnull
+blanksasnull
+maxerror 5
+delimiter '|'
+timeformat 'YYYY-MM-DD HH:MI:SS';

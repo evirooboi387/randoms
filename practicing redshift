@@ -128,7 +128,3 @@ venuecity varchar(30),
 venuestate char(2),
 venueseats integer not null default '1000');
 
-copy test.venue_new(venueid, venuename, venuecity, venuestate)
-from 's3://riwaj-bootcamp-1234/redshift/input/venue_noseats.txt'
-iam_role 'arn:aws:iam::492715478808:role/redshift_admin'
-delimiter '|';

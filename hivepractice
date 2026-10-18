@@ -5,14 +5,6 @@ USE hive_test;
 -- SECTION 1
 
 
-CREATE TABLE salesman (
-    salesman_id INT,
-    name STRING,
-    city STRING,
-    commission DOUBLE
-)
-ROW FORMAT DELIMITED
-FIELDS TERMINATED BY ',';
 
 
 CREATE TABLE customer (

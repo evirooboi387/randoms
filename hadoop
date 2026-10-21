@@ -1,0 +1,11 @@
+#Create data dir on hadoop
+hadoop fs -mkdir -p /user/test
+
+#Create a dir with a name in your $HOME dir
+mkdir ~/data
+cd ~/data
+
+
+Create zipcodes.csv
+touch zipcodes.csv
+nano zipcodes.csv

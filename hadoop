@@ -9,3 +9,16 @@ cd ~/data
 Create zipcodes.csv
 touch zipcodes.csv
 nano zipcodes.csv
+
+Create recursive directories on hadoop:-
+hadoop fs -mkdir -p /user/test/data
+
+
+Upload data file on hdfs
+hadoop fs -put zipcodes.csv /user/test/data
+
+Download file from hdfs to local file system
+hadoop fs -get /user/test/data/zipcodes.csv
+
+Display hadoop file content on terminal
+hadoop fs -cat /user/test/data/zipcodes.csv

@@ -15,3 +15,8 @@ starting hadoop
 creating a new directory and adding the file having the sample data
 hadoop fs -mkdir -p /data/spark/test
 hadoop fs -put ~/users.txt /data/spark/test
+
+creating rdd over hadoop file
+rdd = sc.textFile("/data/spark/test/users.txt")
+rdd.count()
+rdd.collect()

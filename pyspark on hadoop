@@ -27,3 +27,6 @@ hadoop fs -put $HOME/zipcodes1.csv /data/spark/test
 df = spark.read.csv("/data/spark/test/zipcodes1.csv")
 df.printSchema()
 df.show()
+
+writing this dataframe to hadoop into parquet file
+df.write.parquet("/data/spark/test/parquet/people.parquet")

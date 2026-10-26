@@ -20,3 +20,10 @@ creating rdd over hadoop file
 rdd = sc.textFile("/data/spark/test/users.txt")
 rdd.count()
 rdd.collect()
+
+creating dataframe over hadoop file with the sample data and adding it to a csv file
+hadoop fs -put $HOME/zipcodes1.csv /data/spark/test
+
+df = spark.read.csv("/data/spark/test/zipcodes1.csv")
+df.printSchema()
+df.show()

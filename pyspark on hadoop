@@ -30,3 +30,7 @@ df.show()
 
 writing this dataframe to hadoop into parquet file
 df.write.parquet("/data/spark/test/parquet/people.parquet")
+
+#prints the schema
+df = spark.read.csv("file:///home/takeo/zipcodes.csv")
+df.printSchema()

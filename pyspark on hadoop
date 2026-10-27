@@ -34,3 +34,14 @@ df.write.parquet("/data/spark/test/parquet/people.parquet")
 #prints the schema
 df = spark.read.csv("file:///home/takeo/zipcodes.csv")
 df.printSchema()
+df.show()
+
+#Using Header Record For Column Names
+df2 = spark.read.option("header",True).csv("file:///home/takeo/zipcodes.csv")
+
+#Options While Reading CSV File
+df3 = spark.read.options(delimiter=',').csv("file:///home/takeo/zipcodes.csv")
+
+#InferSchema
+df4 = spark.read.options(inferSchema='True',delimiter=',') \
+  .csv("file:///home/takeo/zipcodes.csv")

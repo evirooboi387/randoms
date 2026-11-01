@@ -1,0 +1,5 @@
+
+raw_data = spark.read.csv("sales.csv", header=True, inferSchema=True)
+
+raw_data.write.format("delta").mode("overwrite").save("/Volume/raw_data/sales")
+dbutils.notebook.exit("/Volume/raw_data/sales")

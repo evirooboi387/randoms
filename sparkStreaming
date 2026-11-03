@@ -1,3 +1,5 @@
 %sql
 create table emp(id int, name string);
 insert into emp values(1,'abc'),(2,'xyz');
+
+df = spark.readStream.format("delta").table("emp")

@@ -1,3 +1,5 @@
 kafka-topics.sh --bootstrap-server localhost:9092 --topic firsttopic --create --partitions 3 --replication-factor 1
 
 kafka-topics.sh --bootstrap-server localhost:9092 --topic firsttopic1 --create --partitions 3 --replication-factor 1 --config max.message.bytes=64000
+
+kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic firsttopic2

@@ -5,3 +5,5 @@ kafka-topics.sh --bootstrap-server localhost:9092 --topic firsttopic1 --create -
 kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic firsttopic2
 
 kafka-topics.sh --bootstrap-server localhost:9092 --list
+
+kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic firsttopic

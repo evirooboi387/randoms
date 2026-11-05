@@ -12,3 +12,12 @@ kafka-topics.sh --bootstrap-server localhost:9092 --alter --topic firsttopic --p
 
 #Make sure the topic first_topic is already created with 3 partitions and a replication factor of 1
 kafka-topics.sh --bootstrap-server kafka-broker:9092 --topic firsttopic --create --partitions 3 --replication-factor 1
+
+#Start producing to the topic:
+kafka-console-producer.sh --bootstrap-server kafka-broker:9092 --topic firsttopic
+
+#produce messages from a file
+kafka-console-producer.sh --bootstrap-server kafka-broker:9092 --topic firsttopic < topic-input.txt
+
+#Start consumer to check file data
+kafka-console-consumer.sh --topic firsttopic --from-beginning --bootstrap-server kafka-broker:9092

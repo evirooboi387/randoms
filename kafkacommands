@@ -24,3 +24,6 @@ kafka-console-consumer.sh --topic firsttopic --from-beginning --bootstrap-server
 
 #produce messages with key in the Kafka
 kafka-console-producer.sh --bootstrap-server kafka-broker:9092 --topic firsttopic --property parse.key=true --property key.separator=:
+
+#list kafka topics
+kafka-topics.sh --bootstrap-server kafka-broker:9092 --list

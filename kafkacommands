@@ -27,3 +27,9 @@ kafka-console-producer.sh --bootstrap-server kafka-broker:9092 --topic firsttopi
 
 #list kafka topics
 kafka-topics.sh --bootstrap-server kafka-broker:9092 --list
+
+#Consuming only the future messages of a Kafka topic
+kafka-console-consumer.sh --bootstrap-server kafka-broker:9092 --topic firsttopic
+
+#Consuming all historical messages and future ones in a Kafka topic
+kafka-console-consumer.sh --bootstrap-server kafka-broker:9092 --topic first_topic --from-beginning

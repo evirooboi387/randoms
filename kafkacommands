@@ -30,9 +30,3 @@ kafka-topics.sh --bootstrap-server kafka-broker:9092 --list
 
 #Consuming only the future messages of a Kafka topic
 kafka-console-consumer.sh --bootstrap-server kafka-broker:9092 --topic firsttopic
-
-#Consuming all historical messages and future ones in a Kafka topic
-kafka-console-consumer.sh --bootstrap-server kafka-broker:9092 --topic first_topic --from-beginning
-
-#consume a Kafka Topic and show both the key and value using the Kafka Console
-kafka-console-consumer.sh --bootstrap-server kafka-broker:9092 --topic firsttopic --formatter kafka.tools.DefaultMessageFormatter --property print.timestamp=true --property print.key=true --property print.value=true --from-beginning

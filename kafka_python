@@ -1,0 +1,2 @@
+#Install kafka python in docker container
+pip3 install kafka-python

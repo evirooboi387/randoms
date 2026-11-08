@@ -1,2 +1,5 @@
 #Install kafka python in docker container
 pip3 install kafka-python
+
+Add kafka in interpreter in pycharm
+File->ManageIDESettings->SettingsSync->interpreter->Kafka->Installpackage

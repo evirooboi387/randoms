@@ -1,0 +1,174 @@
+–Create database bootcamp
+CREATE DATABASE IF NOT EXISTS BOOTCAMP;
+
+SHOW DATABASES LIKE 'BOOTCAMP';
+
+–Create schema snow
+CREATE SCHEMA IF NOT EXISTS BOOTCAMP.SNOW;
+
+USE DATABASE BOOTCAMP;
+
+USE SCHEMA SNOW;
+
+SHOW SCHEMAS IN DATABASE BOOTCAMP;
+
+SELECT
+    CURRENT_DATABASE(),
+    CURRENT_SCHEMA();
+
+–Create table Employee
+CREATE TABLE BOOTCAMP.SNOW.EMPLOYEE (
+    EMPLOYEE_ID   NUMBER(10,0),
+    NAME          VARCHAR(100),
+    SALARY        NUMBER(10,2),
+    DEPARTMENT_ID NUMBER(10,0),
+    JOINING_DATE  DATE
+);
+
+
+DESCRIBE TABLE BOOTCAMP.SNOW.EMPLOYEE;
+
+CREATE OR REPLACE FILE FORMAT BOOTCAMP.SNOW.EMPLOYEE_CSV_FORMAT
+    TYPE = CSV
+    SKIP_HEADER = 1
+    FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+    EMPTY_FIELD_AS_NULL = TRUE;
+
+DESC FILE FORMAT BOOTCAMP.SNOW.EMPLOYEE_CSV_FORMAT;
+
+CREATE STAGE IF NOT EXISTS BOOTCAMP.SNOW.EMPLOYEE_STAGE
+    FILE_FORMAT = BOOTCAMP.SNOW.EMPLOYEE_CSV_FORMAT
+
+SHOW STAGES IN SCHEMA BOOTCAMP.SNOW;
+
+LIST @BOOTCAMP.SNOW.EMPLOYEE_STAGE;
+
+COPY INTO BOOTCAMP.SNOW.EMPLOYEE
+FROM @BOOTCAMP.SNOW.EMPLOYEE_STAGE
+FILES = ('Employee.csv')
+FILE_FORMAT = (
+    FORMAT_NAME = 'BOOTCAMP.SNOW.EMPLOYEE_CSV_FORMAT'
+)
+ON_ERROR = 'ABORT_STATEMENT';
+
+SELECT *
+FROM BOOTCAMP.SNOW.EMPLOYEE
+ORDER BY EMPLOYEE_ID;
+
+SELECT COUNT(*) AS TOTAL_EMPLOYEES
+FROM BOOTCAMP.SNOW.EMPLOYEE;
+
+SELECT
+    MIN(SALARY) AS LOWEST_SALARY,
+    MAX(SALARY) AS HIGHEST_SALARY,
+    ROUND(AVG(SALARY), 2) AS AVERAGE_SALARY
+FROM BOOTCAMP.SNOW.EMPLOYEE;
+SHOW STORAGE INTEGRATIONS;
+
+SELECT CURRENT_ROLE();
+
+USE ROLE ACCOUNTADMIN;
+
+CREATE STORAGE INTEGRATION snowflake_s3_integration
+TYPE = EXTERNAL_STAGE
+STORAGE_PROVIDER = 'S3'
+ENABLED = TRUE
+STORAGE_AWS_ROLE_ARN =BOOTCAMP.SNOW.EMPLOYEE_CSV_FORMAT
+'arn:aws:iam::492715478808:role/SnowflakeS3ExportRole'
+STORAGE_ALLOWED_LOCATIONS =
+('s3://yolo-bootcamp/snowflake/');
+
+DESC INTEGRATION snowflake_s3_integration;
+
+
+USE ROLE ACCOUNTADMIN;
+
+USE DATABASE bootcamp;
+USE SCHEMA snow;
+
+CREATE OR REPLACE STAGE snowflake_s3_stage
+URL = 's3://yolo-bootcamp/snowflake/'
+STORAGE_INTEGRATION = snowflake_s3_integration
+FILE_FORMAT = (TYPE = CSV);
+
+
+LIST @snowflake_s3_stage;
+
+USE DATABASE bootcamp;
+USE SCHEMA snow;
+
+SELECT * FROM Employee;
+
+
+–Copy data from snowflake Employee table to a output S3 dir.
+COPY INTO @snowflake_s3_stage/employee_output/employee.csv
+FROM (
+    SELECT
+        EMPLOYEE_ID,
+        NAME,
+        SALARY,
+        DEPARTMENT_ID,
+        JOINING_DATE
+    FROM bootcamp.snow.Employee
+)
+FILE_FORMAT = (
+    TYPE = CSV
+    COMPRESSION = NONE
+    FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+)
+HEADER = TRUE
+OVERWRITE = TRUE
+SINGLE = TRUE;
+
+LIST @snowflake_s3_stage/employee_output/;
+
+
+–Redshift unload script
+UNLOAD ('SELECT * FROM test.listing')
+TO 's3://riwaj-bootcamp-1234/snowflake/listing/'
+IAM_ROLE 'arn:aws:iam::492715478808:role/redshift_admin'
+FORMAT AS PARQUET
+PARALLEL OFF;
+
+
+–result
+s3://riwaj-bootcamp-1234/snowflake/listing/000.parquet
+
+–create the listing table in snowflake
+
+USE ROLE ACCOUNTADMIN;
+USE DATABASE bootcamp;
+USE SCHEMA snow;
+
+CREATE TABLE IF NOT EXISTS listing (
+    listid INTEGER,
+    sellerid INTEGER,
+    eventid INTEGER,
+    dateid SMALLINT,
+    numtickets SMALLINT,
+    priceperticket NUMBER(18,2),
+    totalprice NUMBER(18,2),
+    listtime TIMESTAMP_NTZ
+);
+
+–create the external stage
+CREATE OR REPLACE STAGE bootcamp.snow.listing_stage
+URL = 's3://riwaj-bootcamp-1234/snowflake/listing/'
+STORAGE_INTEGRATION = snowflake_s3_integration
+FILE_FORMAT = (TYPE = PARQUET);
+
+
+
+
+
+–Load Parquet data into individual Snowflake columns
+COPY INTO bootcamp.snow.listing
+FROM @bootcamp.snow.listing_stage
+FILE_FORMAT = (
+    TYPE = PARQUET
+    USE_LOGICAL_TYPE = TRUE
+)
+MATCH_BY_COLUMN_NAME = CASE_INSENSITIVE
+ON_ERROR = ABORT_STATEMENT;
+
+

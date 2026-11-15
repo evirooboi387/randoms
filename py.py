@@ -13,16 +13,16 @@ x=[3,1,4,1,5,9]
 output= find_max_min(x)
 print(output)
 
-# x=[3,1,4,1,5,9]
-# max=x[0]
-# min=x[0]
-#
-# for i in x:
-#     if i>max:
-#         max=i
-#     if i<min:
-#         min=i
-# print(max,min)
+x=[3,1,4,1,5,9]
+max=x[0]
+min=x[0]
+
+for i in x:
+    if i>max:
+        max=i
+    if i<min:
+        min=i
+print(max,min)
 
 
 

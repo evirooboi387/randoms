@@ -14,5 +14,3 @@ raw_data_path_sales = dbutils.notebook.run("sales_dataset", 600)
 raw_data_path_product = dbutils.notebook.run("product_dataset", 600)
 # join_df=....
 
-# Optionally, return a status or a path to the final data
-dbutils.notebook.exit("Aggregation Complete")
